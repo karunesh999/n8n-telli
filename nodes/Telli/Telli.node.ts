@@ -3,7 +3,6 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
-	NodeConnectionType,
 	NodeOperationError,
 	IDataObject,
 } from 'n8n-workflow';
@@ -22,8 +21,8 @@ export class Telli implements INodeType {
 		defaults: {
 			name: 'telli',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [
 			{
 				name: 'telliApi',
@@ -73,33 +72,39 @@ export class Telli implements INodeType {
 						description: 'Update an existing contact in telli',
 						action: 'Update a contact in telli',
 					},
+					{
+						name: 'List Contacts',
+						value: 'list-telli-contacts',
+						description: 'Retrieve all contacts from telli',
+						action: 'List all contacts',
+					},
 				],
 				default: 'add-telli-contact',
 			},
 
 			// add-contact
-            {
-                displayName: 'External Contact ID',
-                name: 'externalContactId',
-                type: 'string',
-                default: '',
-                displayOptions: {
-                    show: {
-                        operation: ['add-telli-contact'],
-                    },
-                },
-                description: 'Your unique internal identifier for the contact',
-                required: true,
-            },
 			{
-                displayName: 'First Name',
+				displayName: 'External Contact ID',
+				name: 'externalContactId',
+				type: 'string',
+				default: '',
+				displayOptions: {
+					show: {
+						operation: ['add-telli-contact'],
+					},
+				},
+				description: 'Your unique internal identifier for the contact',
+				required: true,
+			},
+			{
+				displayName: 'First Name',
 				name: 'firstName',
 				type: 'string',
 				default: '',
 				placeholder: 'John',
 				displayOptions: {
-                    show: {
-                        operation: ['add-telli-contact'],
+					show: {
+						operation: ['add-telli-contact'],
 					},
 				},
 				required: true,
@@ -120,32 +125,32 @@ export class Telli implements INodeType {
 				description: 'The last name of the contact',
 			},
 			{
-                displayName: 'Phone Number',
+				displayName: 'Phone Number',
 				name: 'phoneNumber',
 				type: 'string',
 				default: '',
 				placeholder: '+1 (234) 567-8901',
 				displayOptions: {
-                    show: {
-                        operation: ['add-telli-contact'],
+					show: {
+						operation: ['add-telli-contact'],
 					},
 				},
-                required: true,
-				description: 'Contact\'s phone number in E.164 format (e.g. +4917642048466)',
+				required: true,
+				description: "Contact's phone number in E.164 format (e.g. +4917642048466)",
 			},
-            {
-                displayName: 'Email',
-                name: 'email',
-                type: 'string',
-                placeholder: 'name@email.com',
-                default: '',
-                displayOptions: {
-                    show: {
-                        operation: ['add-telli-contact'],
-                    },
-                },
-                description: 'The email of the contact',
-            },
+			{
+				displayName: 'Email',
+				name: 'email',
+				type: 'string',
+				placeholder: 'name@email.com',
+				default: '',
+				displayOptions: {
+					show: {
+						operation: ['add-telli-contact'],
+					},
+				},
+				description: 'The email of the contact',
+			},
 			{
 				displayName: 'Salutation',
 				name: 'salutation',
@@ -156,7 +161,8 @@ export class Telli implements INodeType {
 						operation: ['add-telli-contact'],
 					},
 				},
-				description: 'Formal title or greeting (e.g. "Mr.", "Ms.", "Herr", "Frau"). If empty, will auto guess based on first name for German calls.',
+				description:
+					'Formal title or greeting (e.g. "Mr.", "Ms.", "Herr", "Frau"). If empty, will auto guess based on first name for German calls.',
 			},
 			{
 				displayName: 'Timezone',
@@ -168,7 +174,8 @@ export class Telli implements INodeType {
 						operation: ['add-telli-contact'],
 					},
 				},
-				description: 'IANA timezone identifier (e.g. Europe/Berlin). Defaults to account timezone if not set.',
+				description:
+					'IANA timezone identifier (e.g. Europe/Berlin). Defaults to account timezone if not set.',
 			},
 			{
 				displayName: 'Contact Details',
@@ -183,7 +190,8 @@ export class Telli implements INodeType {
 						operation: ['add-telli-contact'],
 					},
 				},
-                description: 'Custom variables passed to the AI agent (should be discussed in advance). Please send variables in lowercase snake_case. This used to be called dynamic_variables, which still works but is deprecated and should be replaced with contact_details. Alternatively, you can send contact_details_&lt;key&gt; in the body instead of an object.',
+				description:
+					'Custom variables passed to the AI agent (should be discussed in advance). Please send variables in lowercase snake_case. This used to be called dynamic_variables, which still works but is deprecated and should be replaced with contact_details. Alternatively, you can send contact_details_&lt;key&gt; in the body instead of an object.',
 				default: {},
 				options: [
 					{
@@ -261,7 +269,7 @@ export class Telli implements INodeType {
 						operation: ['update-telli-contact'],
 					},
 				},
-				description: 'Contact\'s phone number in E.164 format (e.g. +4917642048466)',
+				description: "Contact's phone number in E.164 format (e.g. +4917642048466)",
 			},
 			{
 				displayName: 'Email',
@@ -311,7 +319,8 @@ export class Telli implements INodeType {
 						operation: ['update-telli-contact'],
 					},
 				},
-				description: 'Formal title or greeting (e.g. "Mr.", "Ms.", "Herr", "Frau"). If empty, will auto guess based on first name for German calls.',
+				description:
+					'Formal title or greeting (e.g. "Mr.", "Ms.", "Herr", "Frau"). If empty, will auto guess based on first name for German calls.',
 			},
 			{
 				displayName: 'Timezone',
@@ -323,7 +332,8 @@ export class Telli implements INodeType {
 						operation: ['update-telli-contact'],
 					},
 				},
-				description: 'IANA timezone identifier (e.g. Europe/Berlin). Defaults to account timezone if not set.',
+				description:
+					'IANA timezone identifier (e.g. Europe/Berlin). Defaults to account timezone if not set.',
 			},
 			{
 				displayName: 'Contact Details',
@@ -338,7 +348,8 @@ export class Telli implements INodeType {
 						operation: ['update-telli-contact'],
 					},
 				},
-				description: 'Custom variables passed to the AI agent. The entire object will be overwritten. Please send variables in lowercase snake_case.',
+				description:
+					'Custom variables passed to the AI agent. The entire object will be overwritten. Please send variables in lowercase snake_case.',
 				default: {},
 				options: [
 					{
@@ -422,7 +433,8 @@ export class Telli implements INodeType {
 					},
 				},
 				required: true,
-				description: 'Optional agent ID to use for the call. If not set, the default agent will be used.',
+				description:
+					'Optional agent ID to use for the call. If not set, the default agent will be used.',
 			},
 			{
 				displayName: 'Max Retry Days',
@@ -434,7 +446,8 @@ export class Telli implements INodeType {
 						operation: ['schedule-telli-call'],
 					},
 				},
-				description: 'Optional number of days to retry the call. Defaults to the account\'s max retry days.',
+				description:
+					"Optional number of days to retry the call. Defaults to the account's max retry days.",
 			},
 			{
 				displayName: 'Override From Number',
@@ -463,7 +476,7 @@ export class Telli implements INodeType {
 				},
 				required: true,
 				description: 'Your unique internal identifier for the contact',
-			}
+			},
 		],
 	};
 
@@ -475,24 +488,44 @@ export class Telli implements INodeType {
 		for (let i = 0; i < items.length; i++) {
 			try {
 				switch (operation) {
+					case 'list-telli-contacts':
+						const listResponse = await this.helpers.httpRequestWithAuthentication.call(
+							this,
+							'telliApi',
+							{
+								method: 'GET',
+								url: `${BASE_API_URL}/list-contacts`,
+								headers: {
+									'Content-Type': 'application/json',
+								},
+							},
+						);
+
+						outputData.push({
+							json: listResponse,
+						});
+						break;
+
 					case 'add-telli-contact':
 						const firstName = this.getNodeParameter('firstName', i) as string;
 						const lastName = this.getNodeParameter('lastName', i) as string;
 						const phoneNumber = this.getNodeParameter('phoneNumber', i) as string;
 						const externalContactId = this.getNodeParameter('externalContactId', i) as string;
 						const email = this.getNodeParameter('email', i, '') as string;
-						const contactDetailsCollection = this.getNodeParameter('contactDetails', i, { details: [] }) as IDataObject;
+						const contactDetailsCollection = this.getNodeParameter('contactDetails', i, {
+							details: [],
+						}) as IDataObject;
 						const timezone = this.getNodeParameter('timezone', i, '') as string;
 						const salutation = this.getNodeParameter('salutation', i, '') as string;
-						
+
 						if (!phoneNumber.match(/^\+[1-9]\d{1,14}$/)) {
 							throw new NodeOperationError(
-								this.getNode(), 
+								this.getNode(),
 								`Invalid phone number format. Please use E.164 format (e.g., +12125551234)`,
-								{ itemIndex: i }
+								{ itemIndex: i },
 							);
 						}
-						
+
 						const contactDetailsObj: IDataObject = {};
 						if (contactDetailsCollection && contactDetailsCollection.details) {
 							const details = contactDetailsCollection.details as IDataObject[];
@@ -507,12 +540,12 @@ export class Telli implements INodeType {
 							phone_number: phoneNumber,
 							external_contact_id: externalContactId,
 						};
-	
+
 						if (email) contactData.email = email;
 						if (salutation) contactData.salutation = salutation;
 						if (timezone) contactData.timezone = timezone;
-						if (Object.keys(contactDetailsObj).length > 0) contactData.contact_details = contactDetailsObj;
-	
+						if (Object.keys(contactDetailsObj).length > 0)
+							contactData.contact_details = contactDetailsObj;
 
 						const contactResponse = await this.helpers.httpRequestWithAuthentication.call(
 							this,
@@ -538,18 +571,24 @@ export class Telli implements INodeType {
 						const updateLastName = this.getNodeParameter('lastName', i, '') as string;
 						const updatePhoneNumber = this.getNodeParameter('phoneNumber', i, '') as string;
 						const updateEmail = this.getNodeParameter('email', i, '') as string;
-						const updateExternalContactId = this.getNodeParameter('externalContactId', i, '') as string;
+						const updateExternalContactId = this.getNodeParameter(
+							'externalContactId',
+							i,
+							'',
+						) as string;
 						const updateExternalUrl = this.getNodeParameter('externalUrl', i, '') as string;
 						const updateSalutation = this.getNodeParameter('salutation', i, '') as string;
 						const updateTimezone = this.getNodeParameter('timezone', i, '') as string;
-						const updateContactDetailsCollection = this.getNodeParameter('contactDetails', i, { details: [] }) as IDataObject;
+						const updateContactDetailsCollection = this.getNodeParameter('contactDetails', i, {
+							details: [],
+						}) as IDataObject;
 
 						// Validate phone number format if provided
 						if (updatePhoneNumber && !updatePhoneNumber.match(/^\+[1-9]\d{1,14}$/)) {
 							throw new NodeOperationError(
-								this.getNode(), 
+								this.getNode(),
 								`Invalid phone number format. Please use E.164 format (e.g., +12125551234)`,
-								{ itemIndex: i }
+								{ itemIndex: i },
 							);
 						}
 
@@ -576,7 +615,8 @@ export class Telli implements INodeType {
 						if (updateExternalUrl) updateData.external_url = updateExternalUrl;
 						if (updateSalutation) updateData.salutation = updateSalutation;
 						if (updateTimezone) updateData.timezone = updateTimezone;
-						if (Object.keys(updateContactDetailsObj).length > 0) updateData.contact_details = updateContactDetailsObj;
+						if (Object.keys(updateContactDetailsObj).length > 0)
+							updateData.contact_details = updateContactDetailsObj;
 
 						const updateResponse = await this.helpers.httpRequestWithAuthentication.call(
 							this,
@@ -646,11 +686,11 @@ export class Telli implements INodeType {
 						const agentId = this.getNodeParameter('agentId', i) as string;
 						const maxRetryDays = this.getNodeParameter('maxRetryDays', i) as number;
 						const overrideFromNumber = this.getNodeParameter('overrideFromNumber', i) as string;
-						
+
 						const callData: IDataObject = {
 							contact_id: contactId,
 						};
-						
+
 						// optional fields
 						if (agentId) callData.agent_id = agentId;
 						if (maxRetryDays !== undefined) callData.max_retry_days = maxRetryDays;
@@ -695,21 +735,24 @@ export class Telli implements INodeType {
 						break;
 
 					default:
-						throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not supported!`);
+						throw new NodeOperationError(
+							this.getNode(),
+							`The operation "${operation}" is not supported!`,
+						);
 				}
 			} catch (error) {
 				if (error.response) {
 					const errorData = error.response.data || {};
 					const statusCode = error.response.status;
 					const errorMessage = errorData.message || error.message || 'Unknown API error';
-					
+
 					throw new NodeOperationError(
 						this.getNode(),
 						`API error (${statusCode}): ${errorMessage}`,
-						{ itemIndex: i, description: `Operation: ${operation}` }
+						{ itemIndex: i, description: `Operation: ${operation}` },
 					);
 				}
-				
+
 				if (this.continueOnFail()) {
 					outputData.push({
 						json: {
@@ -726,4 +769,4 @@ export class Telli implements INodeType {
 
 		return [outputData];
 	}
-} 
+}
